@@ -536,7 +536,7 @@ acgraph.updateReferences = function() {
     if (!wrapperStage) continue;
 
     // clip-path
-    if (wrapper instanceof acgraph.vector.Element) {
+    if (acgraph.utils.instanceOf(wrapper, acgraph.vector.Element)) {
       if (wrapperStage.isSuspended()) {
         wrapper.setDirtyState(acgraph.vector.Element.DirtyState.CLIP);
       } else if (!wrapper.hasDirtyState(acgraph.vector.Element.DirtyState.CLIP)) {
@@ -545,7 +545,7 @@ acgraph.updateReferences = function() {
     }
 
     // fill, stroke
-    if (wrapper instanceof acgraph.vector.Shape) {
+    if (acgraph.utils.instanceOf(wrapper, acgraph.vector.Shape)) {
       if (wrapperStage.isSuspended()) {
         wrapper.setDirtyState(acgraph.vector.Element.DirtyState.FILL | acgraph.vector.Element.DirtyState.STROKE);
       } else {
