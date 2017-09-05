@@ -110,7 +110,7 @@ acgraph.vector.LinearGradient.serialize = function(keys, opt_opacity, opt_angle,
   /** @type {goog.math.Rect}*/
   var bounds = goog.isDefAndNotNull(opt_mode) ?
       acgraph.utils.instanceOf(opt_mode, goog.math.Rect) ?
-          opt_mode :
+          /** @type {goog.math.Rect} */(opt_mode) :
           null :
       null;
 

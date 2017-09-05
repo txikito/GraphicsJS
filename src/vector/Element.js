@@ -1491,7 +1491,7 @@ acgraph.vector.Element.prototype.clip = function(opt_value) {
       }
     }
   } else {
-    this.clipElement_ = clipShape || null;
+    this.clipElement_ = (/** @type {acgraph.vector.Clip} */(clipShape)) || null;
   }
 
   this.clipChanged();

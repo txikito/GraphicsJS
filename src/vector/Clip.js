@@ -100,11 +100,11 @@ acgraph.vector.Clip.prototype.shape = function(opt_leftOrShape, opt_top, opt_wid
           this.shape_.deserialize(opt_leftOrShape.serialize());
         } else {
           this.shape_.parent(null);
-          this.shape_ = opt_leftOrShape;
+          this.shape_ = /** @type {acgraph.vector.Shape} */(opt_leftOrShape);
           this.shape_.parent(this);
         }
       } else {
-        this.shape_ = opt_leftOrShape;
+        this.shape_ = /** @type {acgraph.vector.Shape} */(opt_leftOrShape);
         this.shape_.parent(this);
       }
     } else {

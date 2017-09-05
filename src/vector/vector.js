@@ -909,7 +909,7 @@ acgraph.vector.normalizeHatchFill = function(opt_patternFillOrType, opt_color, o
     }
   } else
     newFill = null;
-  return newFill;
+  return /** @type {acgraph.vector.PatternFill|acgraph.vector.HatchFill} */(newFill);
 };
 
 
@@ -968,7 +968,7 @@ acgraph.vector.normalizePageSize = function(opt_paperSizeOrWidth, opt_landscapeO
 acgraph.vector.normalizeGradientMode = function(mode) {
   if (goog.isDefAndNotNull(mode)) { // mode is set
     if (acgraph.utils.instanceOf(mode, goog.math.Rect))
-      return mode;
+      return /** @type {goog.math.Rect} */(mode);
     else if (goog.isObject(mode) && !isNaN(mode['left']) && !isNaN(mode['top']) && !isNaN(mode['width']) && !isNaN(mode['height']))
       return new goog.math.Rect(mode['left'], mode['top'], mode['width'], mode['height']);
   }
