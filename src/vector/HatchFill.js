@@ -366,7 +366,9 @@ acgraph.vector.HatchFill.prototype.rectHelper_ = function(w, h, opt_l, opt_t) {
  * @private
  */
 acgraph.vector.HatchFill.prototype.strokePathHelper_ = function() {
-  return /** @type {acgraph.vector.Path} */(this.path().fill('none').stroke(this.color, this.thickness));
+  var path = this.path().fill('none').stroke(this.color, this.thickness);
+  this.registerDisposable(path);
+  return /** @type {acgraph.vector.Path} */(path);
 };
 
 
@@ -377,6 +379,7 @@ acgraph.vector.HatchFill.prototype.strokePathHelper_ = function() {
  */
 acgraph.vector.HatchFill.prototype.onePixelRects_ = function(positions, opt_color) {
   var path = this.path().fill(opt_color || this.color).stroke('none');
+  this.registerDisposable(path);
   for (var i = 0; i < positions.length; i += 2) {
     var x = positions[i];
     var y = positions[i + 1];
@@ -422,10 +425,10 @@ acgraph.vector.HatchFill.prototype.getElementTypePrefix = function() {
 //----------------------------------------------------------------------------------------------------------------------
 /** @inheritDoc */
 acgraph.vector.HatchFill.prototype.disposeInternal = function() {
-  goog.base(this, 'disposeInternal');
-
   if (this.getStage())
     this.getStage().getDefs().removeHatchFill(this);
+
+  goog.base(this, 'disposeInternal');
 };
 
 

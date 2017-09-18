@@ -1727,7 +1727,7 @@ acgraph.vector.Element.prototype.disposeInternal = function() {
  * @protected
  */
 acgraph.vector.Element.prototype.finalizeDisposing = function() {
-  goog.dispose(this.handler_);
+  goog.disposeAll(this.handler_, this.clipElement_);
   this.handler_ = null;
 
   this.setParent(null);

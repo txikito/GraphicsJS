@@ -1168,6 +1168,7 @@ acgraph.vector.Stage.prototype.finishRendering_ = function() {
   this.dispatchEvent(acgraph.vector.Stage.EventType.RENDER_FINISH);
 
   var imageLoader = acgraph.getRenderer().getImageLoader();
+  this.registerDisposable(imageLoader);
   var isImageLoading = acgraph.getRenderer().isImageLoading();
   if (imageLoader && isImageLoading) {
     if (!this.imageLoadingListener_)
