@@ -2120,14 +2120,6 @@ acgraph.vector.Stage.prototype.handleMouseEvent_ = function(e) {
 //  Disposing and export
 //
 //------------------------------------------------------------------------------
-/**
- Disposes Stage. Removes it from parent layer, nulls links, removes from DOM.
- */
-acgraph.vector.Stage.prototype.dispose = function() {
-  acgraph.vector.Stage.base(this, 'dispose');
-};
-
-
 /** @inheritDoc */
 acgraph.vector.Stage.prototype.disposeInternal = function() {
   acgraph.vector.Stage.base(this, 'disposeInternal');
@@ -2137,10 +2129,16 @@ acgraph.vector.Stage.prototype.disposeInternal = function() {
 
   goog.dispose(this.rootLayer_);
   this.renderInternal();
+  this.rootLayer_.finalizeDisposing();
   delete this.rootLayer_;
 
   goog.dispose(this.defs_);
   delete this.defs_;
+
+  var id = acgraph.utils.IdGenerator.getInstance().identify(this, acgraph.utils.IdGenerator.ElementTypePrefix.STAGE);
+  delete goog.global['acgraph'].stages[id];
+
+  goog.object.clear(this.charts);
 
   acgraph.unregister(this);
 
@@ -2148,6 +2146,7 @@ acgraph.vector.Stage.prototype.disposeInternal = function() {
   this.container_ = null;
   delete this.internalContainer_;
   this.domElement_ = null;
+  delete this.domElement_;
 
   acgraph.getRenderer().disposeMeasurement();
 
