@@ -1724,7 +1724,6 @@ acgraph.vector.Element.prototype.disposeInternal = function() {
 /**
  * Finalizes object removal. If object is in DOM, must be called finilizing any
  * operations with an element.
- * @protected
  */
 acgraph.vector.Element.prototype.finalizeDisposing = function() {
   goog.disposeAll(this.handler_, this.clipElement_);
