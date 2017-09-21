@@ -20,6 +20,7 @@ goog.require('acgraph.vector.UnmanagedLayer');
 goog.require('goog.array');
 goog.require('goog.dom');
 goog.require('goog.dom.classlist');
+goog.require('goog.dom.fullscreen');
 goog.require('goog.events.EventHandler');
 goog.require('goog.events.EventTarget');
 goog.require('goog.events.Listenable');
@@ -788,6 +789,38 @@ acgraph.vector.Stage.prototype.getCharts = function() {
 };
 
 
+/**
+ * Getter/setter for full screen status of the stage.
+ * @param {boolean=} opt_value
+ * @return {acgraph.vector.Stage|boolean}
+ */
+acgraph.vector.Stage.prototype.fullScreen = function(opt_value) {
+  var container = /** @type {Element} */(this.getDomWrapper());
+  if (goog.isDef(opt_value)) {
+    if (container && this.isFullScreenAvailable()) {
+      opt_value = !!opt_value;
+      if (this.fullScreen() != opt_value) {
+        if (opt_value)
+          goog.dom.fullscreen.requestFullScreenWithKeys(container);
+        else
+          goog.dom.fullscreen.exitFullScreen();
+      }
+    }
+    return this;
+  }
+  return !!(container && (goog.dom.fullscreen.getFullScreenElement() == container));
+};
+
+
+/**
+ * Tester for the full screen support.
+ * @return {boolean}
+ */
+acgraph.vector.Stage.prototype.isFullScreenAvailable = function() {
+  return goog.dom.fullscreen.isSupported();
+};
+
+
 //endregion
 //region --- Internal methods
 //------------------------------------------------------------------------------
@@ -843,7 +876,11 @@ acgraph.vector.Stage.prototype.checkSize = function(opt_directCall, opt_silent) 
   var isDynamicSize = isDynamicWidth || isDynamicHeight;
   var detachedOrHidden;
   if (isDynamicSize) {
-    var size = this.container_ ? goog.style.getContentBoxSize(this.container_) : new goog.math.Size(NaN, NaN);
+    var size;
+    if (this.fullScreen())
+      size = goog.style.getContentBoxSize(this.internalContainer_);
+    else
+      size = this.container_ ? goog.style.getContentBoxSize(this.container_) : new goog.math.Size(NaN, NaN);
     size.width = Math.max(size.width || 0, 0);
     size.height = Math.max(size.height || 0, 0);
     detachedOrHidden = !size.width && !size.height;
@@ -2252,5 +2289,7 @@ acgraph.vector.Stage.prototype.disposeInternal = function() {
   proto['title'] = proto.title;
   proto['desc'] = proto.desc;
   proto['getCharts'] = proto.getCharts;
+  proto['fullScreen'] = proto.fullScreen;
+  proto['isFullScreenAvailable'] = proto.isFullScreenAvailable;
 })();
 //endregion
