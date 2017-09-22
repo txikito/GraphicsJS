@@ -198,7 +198,6 @@ acgraph.vector.vml.Renderer.prototype.setAttrIE8_ = function(el, key, value) {
 };
 
 
-
 /**
  * @return {Element}
  * @private
@@ -206,6 +205,8 @@ acgraph.vector.vml.Renderer.prototype.setAttrIE8_ = function(el, key, value) {
 acgraph.vector.vml.Renderer.prototype.createDiv_ = function() {
   return goog.dom.createElement('div');
 };
+
+
 //----------------------------------------------------------------------------------------------------------------------
 //
 //  Measurement
@@ -910,6 +911,7 @@ acgraph.vector.vml.Renderer.prototype.createDefsElement = acgraph.vector.vml.Ren
 //----------------------------------------------------------------------------------------------------------------------
 /** @inheritDoc */
 acgraph.vector.vml.Renderer.prototype.createLayerElement = acgraph.vector.vml.Renderer.prototype.createDiv_;
+
 
 /** @inheritDoc */
 acgraph.vector.vml.Renderer.prototype.createImageElement = function() {
