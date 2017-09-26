@@ -413,16 +413,6 @@ acgraph.vector.svg.Renderer.prototype.pathSegmentNamesMap = (function() {
 })();
 
 
-/** @inheritDoc */
-acgraph.vector.svg.Renderer.prototype.pushArcToPathString = function(list, args) {
-  /** @type {number} */
-  var extent = args[3];
-  list.push(args[0], args[1],
-      0, Math.abs(extent) > 180 ? 1 : 0, extent > 0 ? 1 : 0,
-      args[4], args[5]);
-};
-
-
 //----------------------------------------------------------------------------------------------------------------------
 //
 //  Gradient
@@ -1083,13 +1073,13 @@ acgraph.vector.svg.Renderer.prototype.applyFill = function(element) {
       this.setAttr(element.domElement(), 'fill', pathPrefix + imageFill.id() + ')');
       this.setAttr(element.domElement(), 'fill-opacity', goog.isDef(fill['opacity']) ? fill['opacity'] : 1);
     }
-  } else if (fill instanceof acgraph.vector.HatchFill) {
+  } else if (acgraph.utils.instanceOf(fill, acgraph.vector.HatchFill)) {
     var hatch = /** @type {acgraph.vector.HatchFill} */(fill);
     hatch = defs.getHatchFill(hatch.type, hatch.color, hatch.thickness, hatch.size);
     hatch.id(); // if the identifier of the fill is still empty, it will be generated
     hatch.parent(element.getStage()).render();
     this.setAttr(element.domElement(), 'fill', pathPrefix + hatch.id() + ')');
-  } else if (fill instanceof acgraph.vector.PatternFill) {
+  } else if (acgraph.utils.instanceOf(fill, acgraph.vector.PatternFill)) {
     /** @type {acgraph.vector.PatternFill} */
     var pattern = /** @type {acgraph.vector.PatternFill} */(fill);
     pattern.id(); // if the identifier of the fill is still empty, it will be generated
@@ -1425,7 +1415,7 @@ acgraph.vector.svg.Renderer.prototype.setClip = function(element) {
   var clipelement = /** @type {acgraph.vector.Clip} */ (element.clip());
   if (clipelement) {
     var clipId;
-    if (clipelement instanceof acgraph.vector.Clip)
+    if (acgraph.utils.instanceOf(clipelement, acgraph.vector.Clip))
       clipId = /** @type {string} */ (clipelement.id());
     if (!clipId)
       clipId = this.createClip_(element, clipelement);
