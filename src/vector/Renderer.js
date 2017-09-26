@@ -372,8 +372,6 @@ acgraph.vector.Renderer.prototype.getPathString = function(path, opt_transformed
   if (path.isEmpty()) return null;
   /** @type {!Array.<string|number>} */
   var list = [];
-  var pushToArgs = this.pushToArgs;
-  var pushArcToArgs = this.pushArcToPathString;
   var segmentNamesMap = this.pathSegmentNamesMap;
   var func = opt_transformed ? path.forEachTransformedSegment : path.forEachSegment;
   func.call(path, function(segment, args) {
@@ -381,12 +379,12 @@ acgraph.vector.Renderer.prototype.getPathString = function(path, opt_transformed
     if (name) {
       list.push(name);
       if (segment == acgraph.vector.PathBase.Segment.ARCTO) {
-        pushArcToArgs(list, args);
+        this.pushArcToPathString(list, args);
       } else if (segment != acgraph.vector.PathBase.Segment.CLOSE) {
-        pushToArgs(list, args);
+        this.pushToArgs(list, args);
       }
     }
-  });
+  }, this);
   return list.join(' ');
 };
 
