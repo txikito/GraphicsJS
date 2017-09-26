@@ -194,7 +194,7 @@ acgraph.create = function(opt_container, opt_width, opt_height) {
   if (acgraph.type_ == acgraph.StageType.VML) {
     var vml = goog.global['acgraph']['vml'];
     if (vml) {
-      stage =  new vml['Stage'](opt_container, opt_width, opt_height);
+      stage = new vml['Stage'](opt_container, opt_width, opt_height);
     } else {
       throw Error('VML module should be included to render AnyChart in IE8-');
     }
