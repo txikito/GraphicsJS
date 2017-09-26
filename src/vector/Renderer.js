@@ -372,6 +372,7 @@ acgraph.vector.Renderer.prototype.getPathString = function(path, opt_transformed
   if (path.isEmpty()) return null;
   /** @type {!Array.<string|number>} */
   var list = [];
+  var pushToArgs = this.pushToArgs;
   var pushArcToArgs = this.pushArcToPathString;
   var segmentNamesMap = this.pathSegmentNamesMap;
   var func = opt_transformed ? path.forEachTransformedSegment : path.forEachSegment;
@@ -382,11 +383,35 @@ acgraph.vector.Renderer.prototype.getPathString = function(path, opt_transformed
       if (segment == acgraph.vector.PathBase.Segment.ARCTO) {
         pushArcToArgs(list, args);
       } else if (segment != acgraph.vector.PathBase.Segment.CLOSE) {
-        acgraph.utils.partialApplyingArgsToFunction(Array.prototype.push, args, list);
+        pushToArgs(list, args);
       }
     }
   });
   return list.join(' ');
+};
+
+
+/**
+ * @param {Array.<string|number>} list
+ * @param {Array.<number>} args
+ * @protected
+ */
+acgraph.vector.Renderer.prototype.pushArcToPathString = function(list, args) {
+  /** @type {number} */
+  var extent = args[3];
+  list.push(args[0], args[1],
+      0, Math.abs(extent) > 180 ? 1 : 0, extent > 0 ? 1 : 0,
+      args[4], args[5]);
+};
+
+
+/**
+ * @param {Array.<string|number>} list
+ * @param {Array.<number>} args
+ * @protected
+ */
+acgraph.vector.Renderer.prototype.pushToArgs = function(list, args) {
+  acgraph.utils.partialApplyingArgsToFunction(Array.prototype.push, args, list);
 };
 //----------------------------------------------------------------------------------------------------------------------
 //

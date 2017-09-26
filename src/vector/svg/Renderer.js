@@ -413,10 +413,7 @@ acgraph.vector.svg.Renderer.prototype.pathSegmentNamesMap = (function() {
 })();
 
 
-/**
- * @param {Array.<string|number>} list
- * @param {Array.<number>} args
- */
+/** @inheritDoc */
 acgraph.vector.svg.Renderer.prototype.pushArcToPathString = function(list, args) {
   /** @type {number} */
   var extent = args[3];
