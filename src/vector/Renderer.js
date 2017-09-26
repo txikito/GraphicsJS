@@ -346,7 +346,6 @@ acgraph.vector.Renderer.prototype.removeAttr = function(el, key) {
 };
 
 
-
 /**
  * Sets id to element.
  * @param {?Element} element - Element.
