@@ -413,16 +413,6 @@ acgraph.vector.svg.Renderer.prototype.pathSegmentNamesMap = (function() {
 })();
 
 
-/** @inheritDoc */
-acgraph.vector.svg.Renderer.prototype.pushArcToPathString = function(list, args) {
-  /** @type {number} */
-  var extent = args[3];
-  list.push(args[0], args[1],
-      0, Math.abs(extent) > 180 ? 1 : 0, extent > 0 ? 1 : 0,
-      args[4], args[5]);
-};
-
-
 //----------------------------------------------------------------------------------------------------------------------
 //
 //  Gradient

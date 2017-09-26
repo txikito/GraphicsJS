@@ -533,7 +533,7 @@ acgraph.vector.vml.Renderer.prototype.pushArcToPathString = function(list, args)
 
 /** @inheritDoc */
 acgraph.vector.vml.Renderer.prototype.pushToArgs = function(list, args) {
-  acgraph.vector.vml.Renderer.base(this, list, goog.array.map(args, acgraph.vector.vml.Renderer.toSizeCoord_));
+  acgraph.utils.partialApplyingArgsToFunction(Array.prototype.push, goog.array.map(args, acgraph.vector.vml.Renderer.toSizeCoord_), list);
 };
 
 
