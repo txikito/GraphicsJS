@@ -284,6 +284,8 @@ acgraph.vector.svg.Renderer.prototype.measureTextDom = function(element) {
 
 /** @inheritDoc */
 acgraph.vector.svg.Renderer.prototype.getBBox = function(element, text, style) {
+  if (!this.measurement_) this.createMeasurement();
+
   var boundsCache = this.textBoundsCache;
   var styleHash = this.getStyleHash(style);
   var styleCache = boundsCache[styleHash];
